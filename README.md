@@ -1,3 +1,54 @@
+#html使用方法
+<pre>
+<title>测试aes加密</title>
+		<script src="http://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+		<script src="js/crypto-js.js"></script>
+		<script src="js/aes.js"></script>
+		<script src="js/mode-ecb.js"></script>
+		<script>
+			$(document).ready(function() {
+				$("#aes_btn").click(function() {
+					alert("username加密结果："+Encrypt("a12345",$("#username").val()));
+					$("#username").val(Encrypt("a12345",$("#username").val()));
+                    alert("password加密结果："+Encrypt("a12345",$("#password").val()));
+                    $("#password").val(Encrypt("a12345",$("#password").val()));
+				});
+				$("#un_aes_btn").click(function() {
+					alert("username加密结果："+Decrypt("a12345",$("#username").val()));
+					$("#username").val(Decrypt("a12345",$("#username").val()));
+                    alert("password加密结果："+Decrypt("a12345",$("#password").val()));
+                    $("#password").val(Decrypt("a12345",$("#password").val()));
+				});
+			});
+             
+			function Encrypt(key,word) {
+
+				var srcs = CryptoJS.enc.Utf8.parse(word);
+				var encrypted = CryptoJS.AES.encrypt(srcs, key, {
+					mode: CryptoJS.mode.ECB,
+					padding: CryptoJS.pad.Pkcs7
+				});
+				return encrypted.toString();
+			}
+
+			function Decrypt(key,word) {
+
+				var decrypt = CryptoJS.AES.decrypt(word, key, {
+					mode: CryptoJS.mode.ECB,
+					padding: CryptoJS.pad.Pkcs7
+				});
+				return CryptoJS.enc.Utf8.stringify(decrypt).toString();
+			}
+		</script>
+	</head>
+
+	<body>
+			<input name="username" id="username" type="text" />
+			<input name="password" id="password" type="text" /><br>
+			<input type="button" id="aes_btn" value="加密" />
+			<input type="button" id="un_aes_btn" value="解密" />
+	</body>
+</pre>
 # crypto-js
 
 JavaScript library of crypto standards.
